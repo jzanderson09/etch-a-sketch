@@ -9,3 +9,7 @@ html {
 *::after {
     box-sizing: inherit;
 }
+
+.options:active {
+    transform: translateY(4px);
+}
