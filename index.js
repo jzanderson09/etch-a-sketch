@@ -210,7 +210,7 @@ function generateDivGrid(qty) {
         tempDiv.id = Math.trunc(Math.random() * 100000);
         //16*16:
         if (qty <= 256) {
-            tempDiv.style.border = '5px outset rgb(0 0 0 / 15%)';
+            tempDiv.style.border = '5px solid rgb(0 0 0 / 15%)';
             tempDiv.style.height = '6.2%';
             tempDiv.style.width = '6%';
         } 
