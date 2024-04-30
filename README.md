@@ -1,6 +1,8 @@
 # Etch a Sketch
 [The Odin Project](https://www.theodinproject.com/lessons/foundations-etch-a-sketch)
 
+[Github](https://github.com/jzanderson09/etch-a-sketch)
+
 **Assignment**
 
 Don’t forget to commit early and often! You can reference the [Commit Messages lesson](https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/commit-messages)!
