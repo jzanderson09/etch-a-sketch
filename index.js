@@ -6,7 +6,9 @@ const BANNER_FONT_FAMILY = `'Jersey 25', sans-serif`;
 const BANNER_FONT_SIZE = '4.8rem';
 const BANNER_FONT_STYLE = 'italic';
 const BANNER_TEXT_SHADOW = '1px 1px 1px rgb(0 0 0)';
-const BORDER_SIZE = '3px inset rgb(0 0 0)';
+const BORDER_SIZE = '5px inset rgb(0 0 0)';
+const BUTTON_BG_COLOR = 'whitesmoke';
+const BUTTON_TXT_COLOR = 'black';
 const DRAW_COLOR = 'rgb(100 100 100 / 25%)';
 const KNOB_BG_COLOR = 'whitesmoke';
 const KNOB_BORDER_RADIUS = '100%';
@@ -14,9 +16,6 @@ const KNOB_BORDER_SIZE = '8px inset rgb(225 225 225 / 80%)';
 const KNOB_MARGIN = '1%';
 const KNOB_REDUCED_SIZE = '8rem';
 const KNOB_SIZE = '13rem';
-const ORIGINAL_RAINBOW_BUTTON = 'rgb(0 0 0 / 80%)';
-
-let rainbowMode = 'false';
 
 const container = document.querySelector('#container');
 container.style.backgroundColor = 'rgb(230 0 0)';
@@ -55,7 +54,6 @@ etchBanner.style.fontFamily = `'Arizonia', cursive`;
 etchBanner.style.fontSize = '7.2rem';
 etchBanner.style.fontStyle = 'normal';
 etchBanner.style.margin = '1%';
-etchBanner.style.padding = '0';
 etchBanner.style.textShadow = BANNER_TEXT_SHADOW;
 
 const screenText = document.createElement('h3');
@@ -77,18 +75,6 @@ bannerDiv.append(magicText, etchBanner, screenText);
 let divQty = 16 * 16;
 let gridContainer = generateDivGrid(divQty);
 styleGrid(gridContainer);
-
-const rainbowGridsButton = document.createElement('button');
-rainbowGridsButton.addEventListener('click', toggleRainbowMode);
-rainbowGridsButton.id = 'rainbow-button';
-rainbowGridsButton.style.alignSelf = 'center';
-rainbowGridsButton.style.backgroundColor = ORIGINAL_RAINBOW_BUTTON;
-rainbowGridsButton.style.border = '3px outset whitesmoke';
-rainbowGridsButton.style.borderRadius = '100%';
-rainbowGridsButton.style.color = 'whitesmoke';
-rainbowGridsButton.style.height = '8vh';
-rainbowGridsButton.style.width = '15%';
-rainbowGridsButton.textContent = 'Rainbow Mode';
 
 const knobsDiv = document.createElement('div');
 knobsDiv.id = 'knobs-div';
@@ -123,6 +109,17 @@ knobArr.forEach(knob => {
     }
 });
 
+const rainbowGridsButton = document.createElement('button');
+rainbowGridsButton.addEventListener('click', toggleRainbowMode);
+rainbowGridsButton.id = 'rainbow-button';
+rainbowGridsButton.style.alignSelf = 'center';
+rainbowGridsButton.style.backgroundColor = getRandomColor();
+rainbowGridsButton.style.height = '8vh';
+rainbowGridsButton.style.width = '15%';
+rainbowGridsButton.textContent = 'Rainbow Mode';
+
+let rainbowMode = false;
+
 const sixteenButton = document.createElement('button');
 const thirtyTwoButton = document.createElement('button');
 const sixtyFourButton = document.createElement('button');
@@ -135,12 +132,14 @@ sixteenButton.addEventListener('click', clickHandler);
 thirtyTwoButton.addEventListener('click', clickHandler);
 sixtyFourButton.addEventListener('click', clickHandler);
 
-let buttonArr = [sixteenButton, thirtyTwoButton, sixtyFourButton];
+let buttonArr = [sixteenButton, thirtyTwoButton, sixtyFourButton, rainbowGridsButton];
 buttonArr.forEach(button => {
     button.className = 'options';
     button.style.border = BORDER_SIZE;
+    button.style.backgroundColor = BUTTON_BG_COLOR;
     button.style.borderRadius = '10%';
     button.style.boxShadow = '3px 3px 3px 3px rgb(0 0 0)';
+    button.style.color = BUTTON_TXT_COLOR;
     button.style.fontSize = '1.6rem';
     button.style.height = '10vh';
     button.style.width = '20rem';
@@ -162,27 +161,34 @@ function clickHandler(e) {
     new Audio('./click.mp3').play();
     const cancelChange = `Good choice, it's a masterpiece! ^_^`;
     const confirmChange = 'Are you sure? Everything etched will be lost.';
+    let size = 16;
     
     switch(e.target.textContent) {
         case '64 x 64':
             console.log('Size 64 x 64 clicked!');
-            confirm(confirmChange) ? resetGrid(64 * 64) : alert(cancelChange);
+            size = 64;
+            alert('Wiping away your artwork...');
+            resetGrid(size * size);
             break;
-            case '32 x 32':
-                console.log('Size 32 x 32 clicked!');
-                confirm(confirmChange) ? resetGrid(32 * 32) : alert(cancelChange);
+        case '32 x 32':
+            console.log('Size 32 x 32 clicked!');
+            size = 32;
+            alert('Wiping away your artwork...');
+            resetGrid(size * size);
             break;
         default:
             console.log('Size 16 x 16 clicked!');
-            confirm(confirmChange) ? resetGrid(16 * 16) : alert(cancelChange);
+            size = 16;
+            alert('Wiping away your artwork...');
+            resetGrid(size * size);
     }
 }
 
 function drawOnGrid(e) {
-    if (rainbowMode === true) {
-        e.target.style.backgroundColor = getRandomColor();
-    } else {
+    if (rainbowMode === false) {
         e.target.style.backgroundColor = DRAW_COLOR;
+    } else {
+        e.target.style.backgroundColor = getRandomColor();
     }
 }
 
@@ -228,6 +234,7 @@ function generateDivGrid(qty) {
         }
         
         tempDiv.addEventListener('mouseover', drawOnGrid);
+        tempDiv.addEventListener('onmousedown', drawOnGrid);
         divContainer.appendChild(tempDiv);
     }
     return divContainer;
@@ -267,6 +274,7 @@ function styleGrid(grid) {
     grid.style.backgroundColor = 'rgb(150 150 150)';
     grid.style.border = BORDER_SIZE;
     grid.style.borderRadius = '1%';
+    grid.style.boxShadow = '1px 1px 1px 1px black';
     grid.style.display = 'flex';
     grid.style.flexFlow = 'row wrap';
     grid.style.justifyContent = 'center';
@@ -276,10 +284,14 @@ function styleGrid(grid) {
 }
 
 function toggleRainbowMode() {
-    rainbowMode = !rainbowMode;
-    if (rainbowMode) {
+    new Audio('./click.mp3').play();
+    if (rainbowMode === false) {
+        rainbowMode = true;
+        alert('Rainbow mode activated!');
         rainbowGridsButton.style.backgroundColor = getRandomColor();
     } else {
-        rainbowGridsButton.style.backgroundColor = ORIGINAL_RAINBOW_BUTTON;
+        rainbowMode = false;
+        alert('Rainbow mode deactivated!');
+        rainbowGridsButton.style.backgroundColor = BUTTON_BG_COLOR;
     }
 }
