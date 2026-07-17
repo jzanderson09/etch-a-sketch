@@ -1,0 +1,25 @@
+{
+  "name": "etch-a-sketch",
+  "version": "1.0.0",
+  "description": "[The Odin Project](https://www.theodinproject.com/lessons/foundations-etch-a-sketch)",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jzanderson09/etch-a-sketch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jzanderson09/etch-a-sketch/issues"
+  },
+  "homepage": "https://github.com/jzanderson09/etch-a-sketch#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.0"
+  }
+}

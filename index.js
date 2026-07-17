@@ -234,7 +234,7 @@ function generateDivGrid(qty) {
         }
         
         tempDiv.addEventListener('mouseover', drawOnGrid);
-        tempDiv.addEventListener('onmousedown', drawOnGrid);
+        tempDiv.addEventListener('mousedown', drawOnGrid);
         divContainer.appendChild(tempDiv);
     }
     return divContainer;
